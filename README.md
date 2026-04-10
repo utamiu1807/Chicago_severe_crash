@@ -17,6 +17,12 @@ A data-driven framework for proactive safety resource allocation in Chicago. We 
 
 Download the CSV and place it in `dataset/` as `training_data_2023_2025.csv`, then run notebooks in order.
 
+•	Machine Learning Pipeline: Trained three supervised classifiers (Logistic Regression, Random Forest, XGBoost) on 246,221 crash records with a temporally separated forward holdout to simulate real deployment; Random Forest achieved AUC-ROC 0.8675 and 71% recall on severe crashes; cross-validated top-15 features across RF and XGBoost to confirm robustness of severity signal.
+•	Explainable AI (SHAP): Applied SHAP values to decompose per-crash severity probabilities into interpretable condition-level drivers, lighting, crash type, speed context, enabling CDOT analysts to understand why a specific location is flagged, not just that it is flagged; directly addressed deployment-scenario feature validity questions.
+•	Empirical Bayes Risk Estimation: Aggregated 328,495 crash records into 1,700 condition profiles (grid cell × weather × lighting × time × speed); applied EB shrinkage (α=30) to stabilize severe-rate estimates for sparse profiles; composite risk score = shrunk_rate × log(crash_count) rewards high-severity, high-volume environments; top 200 profiles captured 39.86% of severe crashes from only 11.37% of crash exposure.
+•	Spatial Clustering & Three-Flag Prioritization: Applied K-Means (k=9, silhouette=0.3316) for risk-type zone labeling across all 750 grid cells and DBSCAN (eps=0.8, silhouette=0.3589) for dense feature-space hotspot detection; combined both methods with a cell-level rate threshold into a three-flag priority score, surfacing 30 CRITICAL and 176 HIGH intervention candidates — the HIGH tier alone captured 46.3% of all severe crashes in 23.5% of grid cells.
+
+
 ## Project Structure
 
 ```
