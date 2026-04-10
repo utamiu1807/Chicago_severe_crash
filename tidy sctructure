@@ -1,0 +1,9 @@
+notebooks/
+images/
+  eda/
+  classification/
+  clustering/
+  spatial/
+outputs/
+index.html
+README.md
